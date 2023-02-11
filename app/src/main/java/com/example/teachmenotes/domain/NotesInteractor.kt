@@ -1,5 +1,6 @@
 package com.example.teachmenotes.domain
 
-class NotesInteractor(private val notesRepository: NotesRepository) {
+Iimport javax.inject.Inject
 
+class NotesInteractor @Inject constructor(private val notesRepository: NotesRepository) {
 }
