@@ -9,10 +9,10 @@ import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 
 class NotesAdapter(private var notesListener: NotesListener): RecyclerView.Adapter<NotesViewHolder>() {
-    private var listNotes = listOf<NoteModel>() // создание листа
+    private var listNotes = listOf<NoteModel>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<NoteModel>){ // инициалзация листа через сеттер
+    fun submitList(list: List<NoteModel>){
 
         this.listNotes = list
         notifyDataSetChanged()
