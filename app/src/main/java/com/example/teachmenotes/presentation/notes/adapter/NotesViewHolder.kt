@@ -12,13 +12,21 @@ class NotesViewHolder(private val binding: NotesListBinding,
 
     fun bind(noteModel: NoteModel){
 
-
-
         if (binding.notesContainer.isSelected){
             binding.ivPin.setBackgroundResource(R.drawable.pin_icon)
         }else{
             binding.ivPin.setBackgroundResource(0)
         }
+
+        binding.notesContainer.setOnClickListener {
+            notesListener.onClick(noteModel)
+        }
+
+        binding.notesContainer.setOnLongClickListener{
+            notesListener.onLongClick(noteModel, binding.notesContainer)
+            true
+        }
+
     }
 
 
