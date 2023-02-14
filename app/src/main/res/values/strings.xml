@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">TeachMeNotes</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notes_fragment">Notes Fragment</string>
+    <string name="tasks_fragment">Tasks Fragment</string>
 </resources>

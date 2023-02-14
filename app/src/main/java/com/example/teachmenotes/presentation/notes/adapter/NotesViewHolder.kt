@@ -12,6 +12,9 @@ class NotesViewHolder(private val binding: NotesListBinding,
 
     fun bind(noteModel: NoteModel){
 
+        binding.tvTitle.text = noteModel.title
+        binding.tvNote.text = noteModel.note
+        binding.tvDate.text = noteModel.date
 
 
         if (binding.notesContainer.isSelected){
@@ -19,6 +22,16 @@ class NotesViewHolder(private val binding: NotesListBinding,
         }else{
             binding.ivPin.setBackgroundResource(0)
         }
+
+        binding.notesContainer.setOnClickListener {
+            notesListener.onClick(noteModel)
+        }
+
+        binding.notesContainer.setOnLongClickListener{
+            notesListener.onLongClick(noteModel, binding.notesContainer)
+            true
+        }
+
     }
 
 
