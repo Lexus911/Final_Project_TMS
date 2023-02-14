@@ -1,11 +1,11 @@
 package com.example.teachmenotes.presentation.notes
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachmenotes.databinding.FragmentNotesBinding
@@ -23,6 +23,7 @@ class NotesFragment : Fragment(), NotesListener {
     private val viewModel: NotesViewModel by viewModels()
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +36,14 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recViewNotes.layoutManager = LinearLayoutManager(context)
-        binding.recViewNotes.adapter = notesAdapter
+        binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewNotes.adapter = notesAdapter
 
+        viewModel.getData()
+
+        viewModel.notes.observe(viewLifecycleOwner){ listNotes ->
+            notesAdapter.submitList(listNotes)
+        }
 
 
     }

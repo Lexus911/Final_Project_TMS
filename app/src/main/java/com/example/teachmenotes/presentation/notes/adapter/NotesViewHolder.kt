@@ -12,6 +12,11 @@ class NotesViewHolder(private val binding: NotesListBinding,
 
     fun bind(noteModel: NoteModel){
 
+        binding.tvTitle.text = noteModel.title
+        binding.tvNote.text = noteModel.note
+        binding.tvDate.text = noteModel.date
+
+
         if (binding.notesContainer.isSelected){
             binding.ivPin.setBackgroundResource(R.drawable.pin_icon)
         }else{
