@@ -8,26 +8,28 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.domain.NotesInteractor
 import com.example.teachmenotes.presentation.model.NoteModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NotesViewModel @Inject constructor(
+class AddNoteViewModel @Inject constructor(
     private val notesInteractor: NotesInteractor
-    ):ViewModel() {
+): ViewModel() {
 
     private val _nav = MutableLiveData<Int?>()
     val nav: LiveData<Int?> = _nav
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
-
-    val notes = flow<Flow<List<NoteModel>>>{ emit(notesInteractor.showNotes()) }
-
-
-    fun addNoteButtonClicked(){
-        _nav.value = R.id.action_notesFragment_to_addNoteFragment
+    fun saveNote(noteModel: NoteModel) {
+        viewModelScope.launch {
+            try {
+                notesInteractor.saveNote(noteModel)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+        _nav.value = R.id.action_addNoteFragment_to_notesFragment
     }
-
 }
