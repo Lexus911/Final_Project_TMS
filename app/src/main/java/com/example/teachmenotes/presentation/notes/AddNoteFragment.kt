@@ -46,6 +46,7 @@ class AddNoteFragment : Fragment() {
                     false
                 )
             )
+
         }
 
         viewModel.nav.observe(viewLifecycleOwner) {
