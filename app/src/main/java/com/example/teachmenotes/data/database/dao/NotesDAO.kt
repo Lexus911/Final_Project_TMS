@@ -13,4 +13,10 @@ interface NotesDAO {
 
     @Query("SELECT * From NotesEntity")
     fun getNotesEntities(): Flow<List<NotesEntity>>
+
+    @Query("DELETE FROM NotesEntity WHERE id =:id")
+    fun deleteNoteEntityById(id: Int)
+
+    @Query("UPDATE NotesEntity SET title =:title, note =:note WHERE id =:id")
+    fun saveEditNote(title: String, note: String, id: Int)
 }

@@ -1,6 +1,5 @@
 package com.example.teachmenotes.data
 
-import android.util.Log
 import com.example.teachmenotes.data.database.NotesEntity
 import com.example.teachmenotes.data.database.dao.NotesDAO
 import com.example.teachmenotes.domain.NotesRepository
@@ -26,7 +25,6 @@ class NotesRepositoryImpl @Inject constructor(
                     noteModel.pinned
                 )
             )
-            Log.w("ADD TO DB","Note added to DB")
         }
     }
 
@@ -47,5 +45,15 @@ class NotesRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteNoteById(id: Int) {
+        withContext(Dispatchers.IO) {
+            notesDAO.deleteNoteEntityById(id)
+        }
+    }
 
+    override suspend fun saveEditNote(title: String, note: String, id: Int) {
+        withContext(Dispatchers.IO) {
+            notesDAO.saveEditNote(title, note, id)
+        }
+    }
 }

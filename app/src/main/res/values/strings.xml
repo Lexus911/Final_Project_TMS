@@ -5,4 +5,7 @@
     <string name="tasks_fragment">Tasks Fragment</string>
     <string name="write_the_note">Write the note</string>
     <string name="title">Title</string>
+    <string name="title_notes_list">Title</string>
+    <string name="write_the_note_notes_list">Write the note</string>
+    <string name="date_notes_list">Date</string>
 </resources>

@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_notesFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_notesDetailsFragment"
+            app:destination="@id/notesDetailsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/tasksFragment"
@@ -33,6 +37,15 @@
         tools:layout="@layout/fragment_add_note" >
         <action
             android:id="@+id/action_addNoteFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notesDetailsFragment"
+        android:name="com.example.teachmenotes.presentation.notes.NotesDetailsFragment"
+        android:label="fragment_notes_details"
+        tools:layout="@layout/fragment_notes_details" >
+        <action
+            android:id="@+id/action_notesDetailsFragment_to_notesFragment"
             app:destination="@id/notesFragment" />
     </fragment>
 </navigation>

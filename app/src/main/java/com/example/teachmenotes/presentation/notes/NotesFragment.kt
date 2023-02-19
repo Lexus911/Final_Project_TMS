@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
+import com.example.teachmenotes.utils.BundleConstants.ID
+import com.example.teachmenotes.utils.BundleConstants.NOTE
+import com.example.teachmenotes.utils.BundleConstants.TITLE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.catch
 
@@ -25,8 +28,6 @@ class NotesFragment : Fragment(), NotesListener {
 
     private lateinit var notesAdapter: NotesAdapter
     private val viewModel: NotesViewModel by viewModels()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,40 +41,51 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewNotes.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerViewNotes.adapter = notesAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.notes.catch {
                 Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
             }
-                .collect{ flowList ->
-                    flowList.collect{ listNotes ->
+                .collect { flowList ->
+                    flowList.collect { listNotes ->
                         notesAdapter.submitList(listNotes)
                     }
                 }
         }
 
-
         binding.btnAddNote.setOnClickListener {
             viewModel.addNoteButtonClicked()
-            }
+        }
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(it)
             }
         }
+
+        viewModel.bundle.observe(viewLifecycleOwner) { navBundle ->
+
+            if (navBundle != null) {
+                val bundle = Bundle()
+                bundle.putInt(ID, navBundle.id)
+                bundle.putString(TITLE, navBundle.title)
+                bundle.putString(NOTE, navBundle.note)
+
+               findNavController().navigate(navBundle.destinationId, bundle)
+                viewModel.userNavigated()
+
+            }
+        }
     }
 
     override fun onClick(noteModel: NoteModel) {
-        TODO("Not yet implemented")
+        viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note)
     }
 
     override fun onLongClick(noteModel: NoteModel, cardView: CardView) {
         TODO("Not yet implemented")
     }
-
-
 
 
 }
