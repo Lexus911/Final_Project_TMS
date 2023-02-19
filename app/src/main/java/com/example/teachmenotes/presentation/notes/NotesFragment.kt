@@ -1,16 +1,19 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
@@ -74,18 +77,32 @@ class NotesFragment : Fragment(), NotesListener {
 
                findNavController().navigate(navBundle.destinationId, bundle)
                 viewModel.userNavigated()
-
             }
         }
     }
+
 
     override fun onClick(noteModel: NoteModel) {
         viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note)
     }
 
     override fun onLongClick(noteModel: NoteModel, cardView: CardView) {
-        TODO("Not yet implemented")
+        val popupMenu = PopupMenu(requireContext(), cardView)
+        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.delete_note -> {
+                viewModel.deleteNote(noteModel.id!!)
+                }
+            }
+            false
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            popupMenu.setForceShowIcon(true)
+        }
+        popupMenu.show()
     }
-
-
 }
+
+

@@ -8,4 +8,5 @@
     <string name="title_notes_list">Title</string>
     <string name="write_the_note_notes_list">Write the note</string>
     <string name="date_notes_list">Date</string>
+    <string name="delete_popup">Delete</string>
 </resources>
