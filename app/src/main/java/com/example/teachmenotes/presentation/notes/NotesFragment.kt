@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
@@ -44,7 +45,7 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recyclerViewNotes.layoutManager = GridLayoutManager(context, 2)
+        binding.recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.recyclerViewNotes.adapter = notesAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {

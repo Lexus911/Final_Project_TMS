@@ -21,4 +21,8 @@ class NotesInteractor @Inject constructor(private val notesRepository: NotesRepo
     suspend fun saveEditNote(title: String, note: String, id: Int){
         return notesRepository.saveEditNote(title, note, id)
     }
+
+    suspend fun getColors(){
+        return notesRepository.getColors()
+    }
 }

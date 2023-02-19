@@ -12,4 +12,6 @@ interface NotesRepository {
     suspend fun deleteNoteById(id: Int)
 
     suspend fun saveEditNote(title: String, note: String, id: Int)
+
+    suspend fun getColors()
 }
