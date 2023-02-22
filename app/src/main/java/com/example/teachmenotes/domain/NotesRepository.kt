@@ -1,5 +1,6 @@
 package com.example.teachmenotes.domain
 
+import com.example.teachmenotes.presentation.model.ColorModel
 import com.example.teachmenotes.presentation.model.NoteModel
 import kotlinx.coroutines.flow.Flow
 
@@ -11,7 +12,7 @@ interface NotesRepository {
 
     suspend fun deleteNoteById(id: Int)
 
-    suspend fun saveEditNote(title: String, note: String, id: Int)
+    suspend fun saveEditNote(title: String, note: String, id: Int, color: String)
 
-    suspend fun getColors()
+    suspend fun getColors(): List<ColorModel>
 }

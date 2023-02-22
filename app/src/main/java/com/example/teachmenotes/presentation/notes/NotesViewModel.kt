@@ -31,7 +31,7 @@ class NotesViewModel @Inject constructor(
     }
 
     fun noteClicked(id: Int, title: String, note: String){
-        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_notesFragment_to_notesDetailsFragment)
+        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_notesFragment_to_addNoteFragment)
     }
 
     fun userNavigated(){

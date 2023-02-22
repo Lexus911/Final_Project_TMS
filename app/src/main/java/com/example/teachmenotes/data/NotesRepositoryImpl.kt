@@ -1,5 +1,6 @@
 package com.example.teachmenotes.data
 
+import android.util.Log
 import com.example.teachmenotes.data.database.NotesEntity
 import com.example.teachmenotes.data.database.dao.NotesDAO
 import com.example.teachmenotes.data.service.ApiService
@@ -25,7 +26,7 @@ class NotesRepositoryImpl @Inject constructor(
                     noteModel.title,
                     noteModel.note,
                     noteModel.date,
-                    noteModel.pinned
+                    noteModel.color
                 )
             )
         }
@@ -41,7 +42,7 @@ class NotesRepositoryImpl @Inject constructor(
                         it.title,
                         it.note,
                         it.date,
-                        it.pinned
+                        it.color
                     )
                 }
             }
@@ -54,17 +55,18 @@ class NotesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveEditNote(title: String, note: String, id: Int) {
+    override suspend fun saveEditNote(title: String, note: String, id: Int, color: String) {
         withContext(Dispatchers.IO) {
-            notesDAO.saveEditNote(title, note, id)
+            notesDAO.saveEditNote(title, note, id, color)
         }
     }
 
-    override suspend fun getColors() {
+    override suspend fun getColors(): List<ColorModel> {
         return withContext(Dispatchers.IO){
             val response = apiService.getColors()
+            Log.w("Response from server", response.body()?.colorsList.toString())
             response.body()?.colorsList?.let{
-                it.map {
+                it.map {it ->
                     ColorModel(it.name, it.value)
                 }
             } ?: kotlin.run{

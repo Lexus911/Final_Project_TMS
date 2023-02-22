@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/teal_700"
+    android:background="@drawable/double_color"
     android:orientation="vertical"
     tools:context=".presentation.notes.NotesFragment">
 

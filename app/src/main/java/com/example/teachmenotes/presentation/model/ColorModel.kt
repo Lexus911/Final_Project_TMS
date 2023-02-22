@@ -1,6 +1,6 @@
 package com.example.teachmenotes.presentation.model
 
-data class ColorModel (
+data class ColorModel(
     val name: String,
     val value: String,
 )
