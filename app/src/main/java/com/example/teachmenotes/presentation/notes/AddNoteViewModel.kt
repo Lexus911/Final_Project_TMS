@@ -27,8 +27,14 @@ class AddNoteViewModel @Inject constructor(
     val colors: LiveData<List<ColorModel>> = _colors
 
 
-    fun colorClicked(){
-
+    fun colorSelected(color: String, id: Int){
+        viewModelScope.launch {
+            try {
+                notesInteractor.colorSelected(color, id)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
     }
 
     fun getColors() {
@@ -52,10 +58,10 @@ class AddNoteViewModel @Inject constructor(
         _nav.value = R.id.action_addNoteFragment_to_notesFragment
     }
 
-    fun saveEditNote(title: String, note: String, id: Int, color: String) {
+    fun saveEditNote(title: String, note: String, id: Int) {
         viewModelScope.launch {
             try {
-                notesInteractor.saveEditNote(title, note, id, color)
+                notesInteractor.saveEditNote(title, note, id)
             }catch (e: Exception){
                 _error.value = e.message.toString()
             }

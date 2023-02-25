@@ -55,9 +55,9 @@ class NotesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveEditNote(title: String, note: String, id: Int, color: String) {
+    override suspend fun saveEditNote(title: String, note: String, id: Int) {
         withContext(Dispatchers.IO) {
-            notesDAO.saveEditNote(title, note, id, color)
+            notesDAO.saveEditNote(title, note, id)
         }
     }
 
@@ -67,11 +67,18 @@ class NotesRepositoryImpl @Inject constructor(
             Log.w("Response from server", response.body()?.colorsList.toString())
             response.body()?.colorsList?.let{
                 it.map {it ->
-                    ColorModel(it.name, it.value)
+                    ColorModel(it.value)
                 }
             } ?: kotlin.run{
                 emptyList()
             }
+        }
+    }
+
+    override suspend fun colorSelected(color: String, id: Int) {
+        withContext(Dispatchers.IO) {
+            notesDAO.colorSelected(color, id)
+            Log.w("notes_rep_impl","got it")
         }
     }
 }

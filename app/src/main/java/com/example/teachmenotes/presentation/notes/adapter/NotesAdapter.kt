@@ -1,6 +1,7 @@
 package com.example.teachmenotes.presentation.notes.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +9,9 @@ import com.example.teachmenotes.databinding.NotesListBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 
-class NotesAdapter(private var notesListener: NotesListener): RecyclerView.Adapter<NotesViewHolder>() {
+class NotesAdapter(
+    private var notesListener: NotesListener,
+): RecyclerView.Adapter<NotesViewHolder>() {
     private var listNotes = listOf<NoteModel>()
 
     @SuppressLint("NotifyDataSetChanged")

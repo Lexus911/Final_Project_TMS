@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_notes_list"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:padding="8dp"
@@ -34,14 +34,6 @@
                 android:scrollHorizontally="true">
             </com.google.android.material.textview.MaterialTextView>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_pin"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/pin_icon">
-
-            </androidx.appcompat.widget.AppCompatImageView>
         </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
 <com.google.android.material.textview.MaterialTextView

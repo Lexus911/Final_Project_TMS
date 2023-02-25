@@ -9,6 +9,5 @@ val colorsList: List<Colors>
 )
 
 data class Colors(
-    val name: String,
     val value: String,
 )

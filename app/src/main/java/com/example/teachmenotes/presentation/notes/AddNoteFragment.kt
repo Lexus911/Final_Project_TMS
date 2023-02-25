@@ -1,6 +1,9 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -12,10 +15,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachmenotes.databinding.FragmentAddNoteBinding
+import com.example.teachmenotes.presentation.model.ColorModel
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.ColorsAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.ColorsListener
 import com.example.teachmenotes.utils.BundleConstants
+import com.example.teachmenotes.utils.BundleConstants.COLOR
+import com.example.teachmenotes.utils.BundleConstants.COLOR_VALUE
+import com.example.teachmenotes.utils.BundleConstants.ID
+import com.example.teachmenotes.utils.BundleConstants.ID_NOTES_VIEW_HOLDER
+import com.example.teachmenotes.utils.BundleConstants.NOTE
+import com.example.teachmenotes.utils.BundleConstants.TITLE
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -38,6 +48,7 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
     }
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,11 +66,16 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
         val bundle = arguments
         bundle?.let { safeBundle ->
-            val title = safeBundle.getString(BundleConstants.TITLE)
-            val note = safeBundle.getString(BundleConstants.NOTE)
+            val title = safeBundle.getString(TITLE)
+            val note = safeBundle.getString(NOTE)
+            val color = safeBundle.getString(COLOR)
+
             binding.editTextTitle.setText(title)
             binding.editTextNote.setText(note)
+            binding.linearLayout.setBackgroundColor(Color.parseColor(color))
+
         }
+
 
         //Добавить проверку на пустые поля
         binding.imageViewSaveNote.setOnClickListener {
@@ -67,17 +83,16 @@ class AddNoteFragment : Fragment(), ColorsListener {
                 viewModel.saveEditNote(
                     binding.editTextTitle.text.toString(),
                     binding.editTextNote.text.toString(),
-                    bundle.getInt(BundleConstants.ID),
-                    "color"
+                    bundle.getInt(ID),
                 )
-            }else{
+            }else {
                 viewModel.saveNote(
                     NoteModel(
                         null,
                         binding.editTextTitle.text.toString(),
                         binding.editTextNote.text.toString(),
                         date,
-                        "color"
+                       "#ffffff"
                     )
                 )
             }
@@ -96,12 +111,18 @@ class AddNoteFragment : Fragment(), ColorsListener {
                 binding.recyclerViewColors.visibility = GONE
             }
         }
-
-
-
     }
 
-    override fun onClick() {
-        TODO("Not yet implemented")
+
+    override fun onClick(color: String) {
+
+        binding.linearLayout.setBackgroundColor(Color.parseColor(color))
+
+        val bundle = arguments
+            bundle?.let { safeBundle ->
+                val id = safeBundle.getInt(ID_NOTES_VIEW_HOLDER)
+
+                viewModel.colorSelected(color, id)
+            }
     }
 }

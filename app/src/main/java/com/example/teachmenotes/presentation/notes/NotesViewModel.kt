@@ -30,13 +30,18 @@ class NotesViewModel @Inject constructor(
         _nav.value = R.id.action_notesFragment_to_addNoteFragment
     }
 
-    fun noteClicked(id: Int, title: String, note: String){
-        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_notesFragment_to_addNoteFragment)
+    fun noteClicked(id: Int, title: String, note: String, color: String){
+        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_notesFragment_to_addNoteFragment, color)
     }
 
     fun userNavigated(){
         _bundle.value = null
+
     }
+    fun navFinished(){
+        _nav.value = null
+    }
+
 
     fun deleteNote(id: Int) {
         viewModelScope.launch {
@@ -50,5 +55,6 @@ data class NavigateWithBundle(
     val id: Int,
     val title: String,
     val note: String,
-    val destinationId: Int
+    val destinationId: Int,
+    val color: String,
 )

@@ -19,11 +19,15 @@ class NotesInteractor @Inject constructor(private val notesRepository: NotesRepo
         notesRepository.deleteNoteById(id)
     }
 
-    suspend fun saveEditNote(title: String, note: String, id: Int, color: String){
-        return notesRepository.saveEditNote(title, note, id, color)
+    suspend fun saveEditNote(title: String, note: String, id: Int){
+        return notesRepository.saveEditNote(title, note, id)
     }
 
     suspend fun getColors() : List<ColorModel>{
         return notesRepository.getColors()
+    }
+
+    suspend fun colorSelected(color: String, id: Int){
+        return notesRepository.colorSelected(color, id)
     }
 }
