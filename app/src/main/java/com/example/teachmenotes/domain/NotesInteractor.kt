@@ -1,5 +1,6 @@
 package com.example.teachmenotes.domain
 
+import com.example.teachmenotes.presentation.model.ColorModel
 import com.example.teachmenotes.presentation.model.NoteModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -20,5 +21,13 @@ class NotesInteractor @Inject constructor(private val notesRepository: NotesRepo
 
     suspend fun saveEditNote(title: String, note: String, id: Int){
         return notesRepository.saveEditNote(title, note, id)
+    }
+
+    suspend fun getColors() : List<ColorModel>{
+        return notesRepository.getColors()
+    }
+
+    suspend fun colorSelected(color: String, id: Int){
+        return notesRepository.colorSelected(color, id)
     }
 }

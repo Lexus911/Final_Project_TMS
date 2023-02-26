@@ -5,5 +5,5 @@ data class NoteModel(
     val title: String,
     val note: String,
     val date: String,
-    val pinned: Boolean,
+    val color: String,
 )

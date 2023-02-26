@@ -19,4 +19,7 @@ interface NotesDAO {
 
     @Query("UPDATE NotesEntity SET title =:title, note =:note WHERE id =:id")
     fun saveEditNote(title: String, note: String, id: Int)
+
+    @Query("UPDATE NotesEntity SET color =:color WHERE id =:id")
+    fun colorSelected(color: String, id: Int)
 }

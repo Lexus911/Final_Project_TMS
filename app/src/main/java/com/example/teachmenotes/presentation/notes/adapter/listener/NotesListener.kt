@@ -9,4 +9,6 @@ interface NotesListener {
 
     fun onLongClick(noteModel: NoteModel, cardView: CardView)
 
+
+
 }

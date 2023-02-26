@@ -16,6 +16,6 @@ data class NotesEntity (
     val note: String,
     @ColumnInfo("date")
     val date: String,
-    @ColumnInfo("pinned")
-    val pinned: Boolean,
-        )
+    @ColumnInfo("color")
+    val color: String,
+)

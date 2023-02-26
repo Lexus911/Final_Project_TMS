@@ -12,12 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
+import com.example.teachmenotes.utils.BundleConstants.COLOR
+import com.example.teachmenotes.utils.BundleConstants.COLOR_VALUE
 import com.example.teachmenotes.utils.BundleConstants.ID
 import com.example.teachmenotes.utils.BundleConstants.NOTE
 import com.example.teachmenotes.utils.BundleConstants.TITLE
@@ -44,7 +47,7 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recyclerViewNotes.layoutManager = GridLayoutManager(context, 2)
+        binding.recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.recyclerViewNotes.adapter = notesAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -61,9 +64,11 @@ class NotesFragment : Fragment(), NotesListener {
         binding.btnAddNote.setOnClickListener {
             viewModel.addNoteButtonClicked()
         }
+
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(it)
+                viewModel.navFinished()
             }
         }
 
@@ -74,6 +79,7 @@ class NotesFragment : Fragment(), NotesListener {
                 bundle.putInt(ID, navBundle.id)
                 bundle.putString(TITLE, navBundle.title)
                 bundle.putString(NOTE, navBundle.note)
+                bundle.putString(COLOR, navBundle.color)
 
                findNavController().navigate(navBundle.destinationId, bundle)
                 viewModel.userNavigated()
@@ -83,7 +89,7 @@ class NotesFragment : Fragment(), NotesListener {
 
 
     override fun onClick(noteModel: NoteModel) {
-        viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note)
+        viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note, noteModel.color)
     }
 
     override fun onLongClick(noteModel: NoteModel, cardView: CardView) {
