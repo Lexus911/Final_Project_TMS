@@ -3,7 +3,6 @@ package com.example.teachmenotes.presentation.notes
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -14,14 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentAddNoteBinding
-import com.example.teachmenotes.presentation.model.ColorModel
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.ColorsAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.ColorsListener
-import com.example.teachmenotes.utils.BundleConstants
 import com.example.teachmenotes.utils.BundleConstants.COLOR
-import com.example.teachmenotes.utils.BundleConstants.COLOR_VALUE
 import com.example.teachmenotes.utils.BundleConstants.ID
 import com.example.teachmenotes.utils.BundleConstants.ID_NOTES_VIEW_HOLDER
 import com.example.teachmenotes.utils.BundleConstants.NOTE
@@ -37,7 +34,6 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
     private lateinit var colorsAdapter: ColorsAdapter
     private val viewModel: AddNoteViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +54,7 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
         viewModel.getColors()
 
-        viewModel.colors.observe(viewLifecycleOwner){
+        viewModel.colors.observe(viewLifecycleOwner) {
             colorsAdapter.submitList(it)
         }
 
@@ -76,23 +72,24 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
         }
 
-
         //Добавить проверку на пустые поля
         binding.imageViewSaveNote.setOnClickListener {
-            if(bundle != null){
+            if (bundle != null) {
                 viewModel.saveEditNote(
                     binding.editTextTitle.text.toString(),
                     binding.editTextNote.text.toString(),
                     bundle.getInt(ID),
                 )
-            }else {
+            } else {
                 viewModel.saveNote(
                     NoteModel(
                         null,
                         binding.editTextTitle.text.toString(),
                         binding.editTextNote.text.toString(),
                         date,
-                       "#ffffff"
+                        if(binding.colorTextView.text.isNotEmpty()){
+                            binding.colorTextView.text.toString()
+                        }else{getString(R.string.default_color)}
                     )
                 )
             }
@@ -102,12 +99,12 @@ class AddNoteFragment : Fragment(), ColorsListener {
             if (it != null) {
                 findNavController().navigate(it)
             }
-    }
+        }
 
         binding.imageViewShowRecyclerView.setOnClickListener {
-            if(binding.recyclerViewColors.visibility == GONE){
+            if (binding.recyclerViewColors.visibility == GONE) {
                 binding.recyclerViewColors.visibility = VISIBLE
-            }else{
+            } else {
                 binding.recyclerViewColors.visibility = GONE
             }
         }
@@ -118,11 +115,13 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
         binding.linearLayout.setBackgroundColor(Color.parseColor(color))
 
-        val bundle = arguments
-            bundle?.let { safeBundle ->
-                val id = safeBundle.getInt(ID_NOTES_VIEW_HOLDER)
+        binding.colorTextView.text = color
 
-                viewModel.colorSelected(color, id)
-            }
+        val bundle = arguments
+        bundle?.let { safeBundle ->
+            val id = safeBundle.getInt(ID_NOTES_VIEW_HOLDER)
+
+            viewModel.colorSelected(color, id)
+        }
     }
 }
