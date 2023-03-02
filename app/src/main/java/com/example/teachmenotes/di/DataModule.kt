@@ -1,8 +1,10 @@
 package com.example.teachmenotes.di
 
 import com.example.teachmenotes.data.NotesRepositoryImpl
+import com.example.teachmenotes.data.TasksRepositoryImpl
 import com.example.teachmenotes.data.service.ApiService
 import com.example.teachmenotes.domain.NotesRepository
+import com.example.teachmenotes.domain.TasksRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,6 +21,11 @@ abstract class DataModule {
     abstract fun bindNotesRepository(
         notesRepositoryImpl: NotesRepositoryImpl
     ): NotesRepository
+
+    @Binds
+    abstract fun bindTasksRepository(
+       taskRepositoryImpl: TasksRepositoryImpl
+    ): TasksRepository
 
     companion object{
         private const val SP_KEY = "SP_KEY"

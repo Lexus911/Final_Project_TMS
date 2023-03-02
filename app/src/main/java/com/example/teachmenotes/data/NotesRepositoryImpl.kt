@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class NotesRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val notesDAO: NotesDAO
+    private val notesDAO: NotesDAO,
     ) : NotesRepository{
 
     override suspend fun saveNote(noteModel: NoteModel) {

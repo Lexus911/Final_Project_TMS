@@ -2,6 +2,8 @@ package com.example.teachmenotes.di
 
 import com.example.teachmenotes.domain.NotesInteractor
 import com.example.teachmenotes.domain.NotesRepository
+import com.example.teachmenotes.domain.TasksInteractor
+import com.example.teachmenotes.domain.TasksRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +18,8 @@ class DomainModule {
         return NotesInteractor(notesRepository)
     }
 
+    @Provides
+    fun provideTasksInteractor(tasksRepository: TasksRepository): TasksInteractor {
+        return TasksInteractor(tasksRepository)
+    }
 }

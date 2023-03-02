@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.teachmenotes.data.database.NotesEntity
+import com.example.teachmenotes.data.database.TasksEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,4 +23,17 @@ interface NotesDAO {
 
     @Query("UPDATE NotesEntity SET color =:color WHERE id =:id")
     fun colorSelected(color: String, id: Int)
+
+
+    @Insert
+    fun insertTasksEntity(tasksEntity: TasksEntity)
+
+    @Query("SELECT * From TasksEntity")
+    fun getTasksEntities(): Flow<List<TasksEntity>>
+
+    @Query("DELETE FROM TasksEntity WHERE id =:id")
+    fun deleteTaskEntityById(id: Int)
+
+    @Query("UPDATE TasksEntity SET task =:task WHERE id =:id")
+    fun saveEditTask(task: String, id: Int)
 }

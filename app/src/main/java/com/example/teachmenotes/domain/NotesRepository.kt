@@ -17,4 +17,5 @@ interface NotesRepository {
     suspend fun getColors(): List<ColorModel>
 
     suspend fun colorSelected(color: String, id: Int)
+
 }

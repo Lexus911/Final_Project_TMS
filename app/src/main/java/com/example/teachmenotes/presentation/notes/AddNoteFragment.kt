@@ -69,7 +69,6 @@ class AddNoteFragment : Fragment(), ColorsListener {
             binding.editTextTitle.setText(title)
             binding.editTextNote.setText(note)
             binding.linearLayout.setBackgroundColor(Color.parseColor(color))
-
         }
 
         //Добавить проверку на пустые поля
