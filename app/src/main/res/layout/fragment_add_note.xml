@@ -78,6 +78,7 @@
             android:layout_margin="8dp"
             android:visibility="gone"
             tools:listitem="@layout/colors_list">
+            <requestFocus/>
         </androidx.recyclerview.widget.RecyclerView>
 
     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>

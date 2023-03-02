@@ -1,5 +1,6 @@
 package com.example.teachmenotes.data
 
+import android.util.Log
 import com.example.teachmenotes.data.database.TasksEntity
 import com.example.teachmenotes.data.database.dao.NotesDAO
 import com.example.teachmenotes.domain.TasksRepository

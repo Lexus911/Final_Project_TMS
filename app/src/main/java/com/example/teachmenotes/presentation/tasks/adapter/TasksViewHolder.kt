@@ -1,5 +1,6 @@
 package com.example.teachmenotes.presentation.tasks.adapter
 
+import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachmenotes.databinding.TasksListBinding
 import com.example.teachmenotes.presentation.model.TaskModel
@@ -19,7 +20,20 @@ class TasksViewHolder(
             true
         }
 
+        binding.tasksContainer.setOnClickListener {
+            tasksListener.onClick(taskModel)
+        }
+
+        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.textViewTask.paintFlags =
+                    binding.textViewTask.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                binding.textViewTask.paintFlags =
+                    binding.textViewTask.paintFlags and (Paint.STRIKE_THRU_TEXT_FLAG.inv())
+            }
+
+        }
+
     }
-
-
 }

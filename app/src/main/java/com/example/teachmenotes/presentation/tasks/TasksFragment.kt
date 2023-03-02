@@ -31,7 +31,6 @@ class TasksFragment : Fragment(), TasksListener {
     private val viewModel: TasksViewModel by viewModels()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,29 +59,47 @@ class TasksFragment : Fragment(), TasksListener {
 
 
         binding.btnAddTask.setOnClickListener {
-            val  dialog = AlertDialog.Builder(requireContext())
+            val dialog = AlertDialog.Builder(requireContext())
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
 
             dialog.setView(dialogView)
-            .setCancelable(false)
-            .setPositiveButton(getString(R.string.ok_alert_dialog)){ _, _ ->
-                viewModel.saveTask(
-                    TaskModel(
-                        null,
-                        dialogView.findViewById<EditText>(R.id.edit_text_alert_dialog).text.toString(),
-                        false
-                )
-                )
-            }
-            .setNegativeButton(getString(R.string.cancel_alert_dialog)){ dialog, _ ->
-                dialog.cancel()
-            }
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok_alert_dialog)) { _, _ ->
+                    viewModel.saveTask(
+                        TaskModel(
+                            null,
+                            dialogView.findViewById<EditText>(R.id.edit_text_alert_dialog).text.toString(),
+                            false
+                        )
+                    )
+                }
+                .setNegativeButton(getString(R.string.cancel_alert_dialog)) { dialog, _ ->
+                    dialog.cancel()
+                }
             dialog.show()
         }
     }
 
 
     override fun onClick(taskModel: TaskModel) {
+
+        val dialog = AlertDialog.Builder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val editTextDialog = dialogView.findViewById<EditText>(R.id.edit_text_alert_dialog)
+        editTextDialog.setText(taskModel.task)
+
+        dialog.setView(dialogView)
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.ok_alert_dialog)) { _, _ ->
+                    viewModel.saveEditTask(
+                        editTextDialog.text.toString(),
+                        taskModel.id!!
+                    )
+            }
+            .setNegativeButton(getString(R.string.cancel_alert_dialog)) { dialog, _ ->
+                dialog.cancel()
+            }
+        dialog.show()
 
     }
 
@@ -93,7 +110,11 @@ class TasksFragment : Fragment(), TasksListener {
             when (it.itemId) {
                 R.id.delete_note -> {
                     viewModel.deleteTask(taskModel.id!!)
-                    Toast.makeText(requireContext(), getString(R.string.task_deleted), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.task_deleted),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             false
