@@ -84,6 +84,10 @@ class NotesFragment : Fragment(), NotesListener {
                 viewModel.userNavigated()
             }
         }
+
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
 

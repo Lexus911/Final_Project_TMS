@@ -22,5 +22,8 @@ class TasksInteractor @Inject constructor(private val tasksRepository: TasksRepo
         return tasksRepository.saveEditTask(task, id)
     }
 
+    suspend fun setCompleted(completed: Boolean, id: Int){
+        return tasksRepository.setCompleted(completed, id)
+    }
 
 }

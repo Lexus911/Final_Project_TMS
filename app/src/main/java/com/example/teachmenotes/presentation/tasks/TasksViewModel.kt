@@ -17,7 +17,6 @@ class TasksViewModel @Inject constructor(
     private val tasksInteractor: TasksInteractor
 ): ViewModel() {
 
-
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
@@ -45,9 +44,22 @@ class TasksViewModel @Inject constructor(
 
     fun deleteTask(id: Int) {
         viewModelScope.launch {
-            tasksInteractor.deleteTaskById(id)
+            try {
+                tasksInteractor.deleteTaskById(id)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
         }
-
     }
 
+
+    fun setCompleted(completed: Boolean, id: Int) {
+        viewModelScope.launch {
+            try {
+                tasksInteractor.setCompleted(completed, id)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
 }

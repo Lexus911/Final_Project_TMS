@@ -12,4 +12,6 @@ interface TasksRepository {
     suspend fun deleteTaskById(id: Int)
 
     suspend fun saveEditTask(task: String, id: Int)
+
+    suspend fun setCompleted(completed: Boolean, id: Int)
 }

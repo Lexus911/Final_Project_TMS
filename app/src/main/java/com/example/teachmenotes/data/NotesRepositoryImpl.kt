@@ -78,7 +78,6 @@ class NotesRepositoryImpl @Inject constructor(
     override suspend fun colorSelected(color: String, id: Int) {
         withContext(Dispatchers.IO) {
             notesDAO.colorSelected(color, id)
-            Log.w("notes_rep_impl","got it")
         }
     }
 }

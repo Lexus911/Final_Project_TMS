@@ -36,4 +36,7 @@ interface NotesDAO {
 
     @Query("UPDATE TasksEntity SET task =:task WHERE id =:id")
     fun saveEditTask(task: String, id: Int)
+
+    @Query("UPDATE TasksEntity SET completed =:completed WHERE id =:id")
+    fun setCompleted(completed: Boolean, id: Int)
 }

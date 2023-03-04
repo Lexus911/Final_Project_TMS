@@ -1,6 +1,5 @@
 package com.example.teachmenotes.data
 
-import android.util.Log
 import com.example.teachmenotes.data.database.TasksEntity
 import com.example.teachmenotes.data.database.dao.NotesDAO
 import com.example.teachmenotes.domain.TasksRepository
@@ -50,6 +49,12 @@ class TasksRepositoryImpl @Inject constructor(
     override suspend fun saveEditTask(task: String, id: Int) {
         withContext(Dispatchers.IO) {
             notesDAO.saveEditTask(task, id)
+        }
+    }
+
+    override suspend fun setCompleted(completed: Boolean, id: Int) {
+        withContext(Dispatchers.IO) {
+            notesDAO.setCompleted(completed, id)
         }
     }
 

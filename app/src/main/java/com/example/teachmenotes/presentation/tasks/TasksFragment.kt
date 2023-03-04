@@ -43,8 +43,8 @@ class TasksFragment : Fragment(), TasksListener {
         super.onViewCreated(view, savedInstanceState)
 
         tasksAdapter = TasksAdapter(this)
-        binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewNotes.adapter = tasksAdapter
+        binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewTasks.adapter = tasksAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.tasks.catch {
@@ -56,7 +56,9 @@ class TasksFragment : Fragment(), TasksListener {
                     }
                 }
         }
-
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
 
         binding.btnAddTask.setOnClickListener {
             val dialog = AlertDialog.Builder(requireContext())
@@ -80,7 +82,6 @@ class TasksFragment : Fragment(), TasksListener {
         }
     }
 
-
     override fun onClick(taskModel: TaskModel) {
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -100,7 +101,6 @@ class TasksFragment : Fragment(), TasksListener {
                 dialog.cancel()
             }
         dialog.show()
-
     }
 
     override fun onLongClick(taskModel: TaskModel, cardView: CardView) {
@@ -124,5 +124,9 @@ class TasksFragment : Fragment(), TasksListener {
             popupMenu.setForceShowIcon(true)
         }
         popupMenu.show()
+    }
+
+    override fun setCompleted(completed: Boolean, id: Int) {
+        viewModel.setCompleted(completed,id)
     }
 }
