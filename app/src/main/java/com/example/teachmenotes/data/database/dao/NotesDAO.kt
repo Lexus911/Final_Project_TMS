@@ -28,7 +28,7 @@ interface NotesDAO {
     @Insert
     fun insertTasksEntity(tasksEntity: TasksEntity)
 
-    @Query("SELECT * From TasksEntity")
+    @Query("SELECT * From TasksEntity ORDER BY completed ASC, id DESC")
     fun getTasksEntities(): Flow<List<TasksEntity>>
 
     @Query("DELETE FROM TasksEntity WHERE id =:id")
