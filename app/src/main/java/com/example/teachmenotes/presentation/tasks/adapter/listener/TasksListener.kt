@@ -9,4 +9,6 @@ interface TasksListener {
     fun onClick(taskModel: TaskModel)
 
     fun onLongClick(taskModel: TaskModel, cardView: CardView)
+
+    fun setCompleted(completed: Boolean, id: Int)
 }

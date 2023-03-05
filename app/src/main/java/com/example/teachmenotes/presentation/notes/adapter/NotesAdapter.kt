@@ -12,6 +12,7 @@ import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListene
 class NotesAdapter(
     private var notesListener: NotesListener,
 ): RecyclerView.Adapter<NotesViewHolder>() {
+
     private var listNotes = listOf<NoteModel>()
 
     @SuppressLint("NotifyDataSetChanged")

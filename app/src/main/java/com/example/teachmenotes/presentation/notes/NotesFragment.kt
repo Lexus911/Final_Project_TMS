@@ -20,7 +20,6 @@ import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 import com.example.teachmenotes.utils.BundleConstants.COLOR
-import com.example.teachmenotes.utils.BundleConstants.COLOR_VALUE
 import com.example.teachmenotes.utils.BundleConstants.ID
 import com.example.teachmenotes.utils.BundleConstants.NOTE
 import com.example.teachmenotes.utils.BundleConstants.TITLE
@@ -85,6 +84,10 @@ class NotesFragment : Fragment(), NotesListener {
                 viewModel.userNavigated()
             }
         }
+
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -99,6 +102,7 @@ class NotesFragment : Fragment(), NotesListener {
             when (it.itemId) {
                 R.id.delete_note -> {
                 viewModel.deleteNote(noteModel.id!!)
+                Toast.makeText(requireContext(), getString(R.string.note_deleted), Toast.LENGTH_SHORT).show()
                 }
             }
             false

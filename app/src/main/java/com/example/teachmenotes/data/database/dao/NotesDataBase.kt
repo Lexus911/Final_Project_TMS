@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.teachmenotes.data.database.NotesEntity
+import com.example.teachmenotes.data.database.TasksEntity
 
-@Database(entities = [NotesEntity::class], version = 1, exportSchema = false)
+@Database(entities = [NotesEntity::class, TasksEntity::class], version = 1, exportSchema = false)
 abstract class NotesDataBase : RoomDatabase() {
 
     abstract fun getNotesDAO(): NotesDAO

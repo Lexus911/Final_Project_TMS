@@ -10,4 +10,9 @@
     <string name="date_notes_list">Date</string>
     <string name="delete_popup">Delete</string>
     <string name="default_color">#ffffff</string>
+    <string name="write_the_task">Write the task:</string>
+    <string name="ok_alert_dialog">OK</string>
+    <string name="cancel_alert_dialog">Cancel</string>
+    <string name="note_deleted">Note successfully deleted</string>
+    <string name="task_deleted">Task successfully deleted</string>
 </resources>

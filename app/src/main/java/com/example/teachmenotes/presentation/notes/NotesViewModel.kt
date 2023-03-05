@@ -21,6 +21,9 @@ class NotesViewModel @Inject constructor(
     private val _nav = MutableLiveData<Int?>()
     val nav: LiveData<Int?> = _nav
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     private val _bundle = MutableLiveData<NavigateWithBundle?>()
     val bundle: LiveData<NavigateWithBundle?> = _bundle
 
@@ -45,7 +48,11 @@ class NotesViewModel @Inject constructor(
 
     fun deleteNote(id: Int) {
         viewModelScope.launch {
-            notesInteractor.deleteNoteById(id)
+            try {
+                notesInteractor.deleteNoteById(id)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
         }
 
     }
