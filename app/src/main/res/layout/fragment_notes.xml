@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.circularreveal.CircularRevealRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.CircularRevealRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/double_color"
     android:orientation="vertical"
-    tools:context=".presentation.notes.NotesFragment">
+    tools:context=".presentation.notes.NotesFragment"
+    >
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/search"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/white"
+        tools:ignore="RtlSymmetry">
+    </androidx.appcompat.widget.AppCompatEditText>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_notes"
-        android:layout_margin="8dp"
-        tools:listitem="@layout/notes_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_notes"
+        android:layout_margin="8dp"
+        tools:listitem="@layout/notes_list">
+
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="26dp"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_add_note"
-        android:backgroundTint="@color/white">
+        android:contentDescription="@string/plus_floating_button">
+
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>

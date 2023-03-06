@@ -1,7 +1,10 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,8 +49,10 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
+        binding.recyclerViewNotes.layoutManager =
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.recyclerViewNotes.adapter = notesAdapter
+
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.notes.catch {
@@ -80,13 +85,42 @@ class NotesFragment : Fragment(), NotesListener {
                 bundle.putString(NOTE, navBundle.note)
                 bundle.putString(COLOR, navBundle.color)
 
-               findNavController().navigate(navBundle.destinationId, bundle)
+                findNavController().navigate(navBundle.destinationId, bundle)
                 viewModel.userNavigated()
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner){
+        viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.searchNotes.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchNote()
+            }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun searchNote() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.notes.catch {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+                .collect { flowList ->
+                    flowList.collect { listNotes ->
+                        val searchNotes = binding.searchNotes.text
+
+                        notesAdapter.listNotes = listNotes.filter {
+                            it.title.startsWith(searchNotes.toString(), true) ||
+                                    it.note.contains(searchNotes.toString(), true)
+                        } as ArrayList
+                        notesAdapter.notifyDataSetChanged()
+                    }
+                }
         }
     }
 

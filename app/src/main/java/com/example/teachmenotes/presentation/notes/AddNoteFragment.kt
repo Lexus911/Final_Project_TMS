@@ -1,6 +1,7 @@
 package com.example.teachmenotes.presentation.notes
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -101,6 +103,9 @@ class AddNoteFragment : Fragment(), ColorsListener {
         }
 
         binding.imageViewShowRecyclerView.setOnClickListener {
+            val hideKeyboard = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            hideKeyboard.hideSoftInputFromWindow(binding.imageViewShowRecyclerView.windowToken, 0)
+
             if (binding.recyclerViewColors.visibility == GONE) {
                 binding.recyclerViewColors.visibility = VISIBLE
             } else {
