@@ -55,7 +55,7 @@ class AddNoteViewModel @Inject constructor(
                 _error.value = e.message.toString()
             }
         }
-        _nav.value = R.id.action_addNoteFragment_to_notesFragment
+        _nav.value = R.id.action_addNoteFragment_to_viewPagerFragment
     }
 
     fun saveEditNote(title: String, note: String, id: Int) {
@@ -66,7 +66,7 @@ class AddNoteViewModel @Inject constructor(
                 _error.value = e.message.toString()
             }
         }
-        _nav.value = R.id.action_addNoteFragment_to_notesFragment
+        _nav.value = R.id.action_addNoteFragment_to_viewPagerFragment
     }
 
 

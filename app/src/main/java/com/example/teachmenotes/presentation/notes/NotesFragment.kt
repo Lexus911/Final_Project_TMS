@@ -21,6 +21,7 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
+import com.example.teachmenotes.presentation.notes.adapter.ViewPagerStateAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 import com.example.teachmenotes.utils.BundleConstants.COLOR
 import com.example.teachmenotes.utils.BundleConstants.ID
@@ -52,7 +53,6 @@ class NotesFragment : Fragment(), NotesListener {
         binding.recyclerViewNotes.layoutManager =
             StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.recyclerViewNotes.adapter = notesAdapter
-
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.notes.catch {
