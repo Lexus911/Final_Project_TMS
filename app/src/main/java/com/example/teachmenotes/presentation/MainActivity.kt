@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
-
-        binding.bottomNavigation.setupWithNavController(navController)
-
 
     }
 }

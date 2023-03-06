@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_main_screen"
+    android:background="@color/antique_white"
     android:orientation="vertical"
     tools:context=".presentation.notes.NotesFragment">
 
@@ -24,7 +24,8 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="26dp"
         android:src="@drawable/ic_add_note"
-        android:backgroundTint="@color/white">
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/plus_floating_button">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>

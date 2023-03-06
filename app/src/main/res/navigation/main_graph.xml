@@ -3,29 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/notesFragment">
+    app:startDestination="@id/viewPagerFragment">
 
     <fragment
         android:id="@+id/notesFragment"
         android:name="com.example.teachmenotes.presentation.notes.NotesFragment"
         android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" >
-        <action
-            android:id="@+id/action_notesFragment_to_tasksFragment"
-            app:destination="@id/tasksFragment" />
-        <action
-            android:id="@+id/action_notesFragment_to_addNoteFragment"
-            app:destination="@id/addNoteFragment" />
-
-    </fragment>
+        tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.example.teachmenotes.presentation.tasks.TasksFragment"
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" >
         <action
-            android:id="@+id/action_tasksFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+            android:id="@+id/action_tasksFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
@@ -33,7 +25,19 @@
         android:label="fragment_add_note"
         tools:layout="@layout/fragment_add_note" >
         <action
-            android:id="@+id/action_addNoteFragment_to_notesFragment"
-            app:destination="@id/notesFragment" />
+            android:id="@+id/action_addNoteFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.teachmenotes.presentation.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
     </fragment>
 </navigation>

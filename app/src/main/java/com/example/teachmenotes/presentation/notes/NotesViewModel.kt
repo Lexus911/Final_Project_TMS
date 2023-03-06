@@ -30,11 +30,11 @@ class NotesViewModel @Inject constructor(
     val notes = flow<Flow<List<NoteModel>>>{ emit(notesInteractor.showNotes()) }
 
     fun addNoteButtonClicked(){
-        _nav.value = R.id.action_notesFragment_to_addNoteFragment
+        _nav.value = R.id.action_viewPagerFragment_to_addNoteFragment
     }
 
     fun noteClicked(id: Int, title: String, note: String, color: String){
-        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_notesFragment_to_addNoteFragment, color)
+        _bundle.value = NavigateWithBundle(id, title, note, destinationId = R.id.action_viewPagerFragment_to_addNoteFragment, color)
     }
 
     fun userNavigated(){
