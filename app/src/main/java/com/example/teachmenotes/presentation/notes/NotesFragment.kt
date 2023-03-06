@@ -1,13 +1,24 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -49,6 +60,7 @@ class NotesFragment : Fragment(), NotesListener {
         binding.recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.recyclerViewNotes.adapter = notesAdapter
 
+
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.notes.catch {
                 Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
@@ -88,8 +100,78 @@ class NotesFragment : Fragment(), NotesListener {
         viewModel.error.observe(viewLifecycleOwner){
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
+
+        binding.searchNotes.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchNote()
+                highLightSearch()
+            }
+        })
+
     }
 
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun searchNote() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.notes.catch {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+                .collect { flowList ->
+                    flowList.collect { listNotes ->
+                        val searchNotes = binding.searchNotes.text
+
+                            notesAdapter.listNotes = listNotes.filter {
+                                it.title.startsWith(searchNotes.toString(), true) || it.note.contains(
+                                    searchNotes.toString(), true) } as ArrayList
+                        notesAdapter.notifyDataSetChanged()
+                    }
+                }
+        }
+    }
+
+    private fun highLightSearch() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.notes.catch {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+                .collect { flowList ->
+                    flowList.collect { listNotes ->
+                        val spanHighlight = ForegroundColorSpan(ResourcesCompat.getColor(resources, R.color.white, null))
+
+                        val searchNotes = binding.searchNotes.text.toString()
+
+                        listNotes.forEach { item ->
+                            val spannableTitle = SpannableString(item.title)
+                            val spannableNote = SpannableString(item.note)
+
+                            spannableTitle.getSpans(0, spannableTitle.length, ForegroundColorSpan::class.java).forEach {
+                                spannableTitle.removeSpan(it)
+                            }
+
+                            spannableNote.getSpans(0, spannableNote.length, ForegroundColorSpan::class.java).forEach {
+                                spannableNote.removeSpan(it)
+                            }
+
+                            if (spannableTitle.startsWith(searchNotes, true)) {
+                                spannableTitle.setSpan(spanHighlight, 0, searchNotes.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            }
+
+                            if (spannableNote.contains(searchNotes, true)) {
+                                val index = spannableNote.toString().indexOf(searchNotes.toString(), 0, true)
+                                spannableNote.setSpan(spanHighlight, index, index + searchNotes.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            }
+
+                            item.title = spannableTitle.toString()
+                            item.note = spannableNote.toString()
+                        }
+                    }
+                }
+        }
+    }
 
     override fun onClick(noteModel: NoteModel) {
         viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note, noteModel.color)

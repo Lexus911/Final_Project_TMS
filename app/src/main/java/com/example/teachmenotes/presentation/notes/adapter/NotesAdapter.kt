@@ -13,13 +13,14 @@ class NotesAdapter(
     private var notesListener: NotesListener,
 ): RecyclerView.Adapter<NotesViewHolder>() {
 
-    private var listNotes = listOf<NoteModel>()
+    var listNotes = listOf<NoteModel>()
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitList(list: List<NoteModel>){
 
         this.listNotes = list
         notifyDataSetChanged()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {

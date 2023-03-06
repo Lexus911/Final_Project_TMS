@@ -80,6 +80,7 @@ class TasksFragment : Fragment(), TasksListener {
                 }
             dialog.show()
         }
+
     }
 
     override fun onClick(taskModel: TaskModel) {

@@ -1,9 +1,12 @@
 package com.example.teachmenotes.presentation.model
 
+import android.text.Spannable
+import android.text.SpannableString
+
 data class NoteModel(
     val id: Int?,
-    val title: String,
-    val note: String,
+    var title: String,
+    var note: String,
     val date: String,
     val color: String,
 )

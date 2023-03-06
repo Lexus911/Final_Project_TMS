@@ -36,7 +36,7 @@
 
         </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
-<com.google.android.material.textview.MaterialTextView
+<androidx.appcompat.widget.AppCompatTextView
     android:id="@+id/tv_note"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
     android:textColor="@color/black"
     android:maxLines="20"
     >
-</com.google.android.material.textview.MaterialTextView>
+</androidx.appcompat.widget.AppCompatTextView>
 
 <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_date"
