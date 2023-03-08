@@ -61,6 +61,7 @@ class TasksFragment : Fragment(), TasksListener {
         }
 
         binding.btnAddTask.setOnClickListener {
+
             val dialog = AlertDialog.Builder(requireContext())
             val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
 

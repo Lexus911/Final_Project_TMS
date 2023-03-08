@@ -8,7 +8,7 @@ import javax.inject.Inject
 class NotesInteractor @Inject constructor(private val notesRepository: NotesRepository) {
 
     suspend fun saveNote(noteModel: NoteModel){
-        return notesRepository.saveNote(noteModel)
+        notesRepository.saveNote(noteModel)
     }
 
     suspend fun showNotes(): Flow<List<NoteModel>> {
@@ -20,7 +20,7 @@ class NotesInteractor @Inject constructor(private val notesRepository: NotesRepo
     }
 
     suspend fun saveEditNote(title: String, note: String, id: Int){
-        return notesRepository.saveEditNote(title, note, id)
+        notesRepository.saveEditNote(title, note, id)
     }
 
     suspend fun getColors() : List<ColorModel>{
@@ -28,6 +28,26 @@ class NotesInteractor @Inject constructor(private val notesRepository: NotesRepo
     }
 
     suspend fun colorSelected(color: String, id: Int){
-        return notesRepository.colorSelected(color, id)
+        notesRepository.colorSelected(color, id)
+    }
+
+    suspend fun listLayoutPressed(){
+        notesRepository.listLayoutPressed()
+    }
+
+    suspend fun gridLayoutPressed(){
+        notesRepository.gridLayoutPressed()
+    }
+
+    suspend fun checkLayout(): Boolean{
+        return notesRepository.checkLayout()
+    }
+
+    suspend fun sortingByDateDESC(){
+        notesRepository.sortingByDateDESC()
+    }
+
+    suspend fun sortingByDateASC(){
+        notesRepository.sortingByDateASC()
     }
 }

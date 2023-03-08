@@ -27,7 +27,61 @@ class NotesViewModel @Inject constructor(
     private val _bundle = MutableLiveData<NavigateWithBundle?>()
     val bundle: LiveData<NavigateWithBundle?> = _bundle
 
+    private val _layout = MutableLiveData<Boolean>()
+    val layout: LiveData<Boolean> = _layout
+
+
     val notes = flow<Flow<List<NoteModel>>>{ emit(notesInteractor.showNotes()) }
+
+    fun checkLayout(){
+        viewModelScope.launch {
+            try {
+                _layout.value = notesInteractor.checkLayout()
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
+
+    fun listLayout(){
+        viewModelScope.launch {
+            try {
+               notesInteractor.listLayoutPressed()
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
+
+    fun gridLayout(){
+        viewModelScope.launch {
+            try {
+                notesInteractor.gridLayoutPressed()
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
+
+    fun sortingByDateDESC(){
+        viewModelScope.launch {
+            try {
+                notesInteractor.sortingByDateDESC()
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
+
+    fun sortingByDateASC(){
+        viewModelScope.launch {
+            try {
+                notesInteractor.sortingByDateASC()
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
 
     fun addNoteButtonClicked(){
         _nav.value = R.id.action_viewPagerFragment_to_addNoteFragment
@@ -44,7 +98,6 @@ class NotesViewModel @Inject constructor(
     fun navFinished(){
         _nav.value = null
     }
-
 
     fun deleteNote(id: Int) {
         viewModelScope.launch {

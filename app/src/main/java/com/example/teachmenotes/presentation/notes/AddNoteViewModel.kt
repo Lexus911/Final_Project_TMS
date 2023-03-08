@@ -1,5 +1,7 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +27,9 @@ class AddNoteViewModel @Inject constructor(
 
     private val _colors = MutableLiveData <List<ColorModel>>()
     val colors: LiveData<List<ColorModel>> = _colors
+
+    private val _visibility = MutableLiveData<Int>()
+    val visibility: LiveData<Int> = _visibility
 
 
     fun colorSelected(color: String, id: Int){
@@ -67,6 +72,14 @@ class AddNoteViewModel @Inject constructor(
             }
         }
         _nav.value = R.id.action_addNoteFragment_to_viewPagerFragment
+    }
+
+    fun visibilityRecyclerView(){
+        if(_visibility.value == GONE ){
+            _visibility.value = VISIBLE
+        }else{
+            _visibility.value = GONE
+        }
     }
 
 

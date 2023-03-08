@@ -12,8 +12,11 @@ interface NotesDAO {
     @Insert
     fun insertNotesEntity(notesEntity: NotesEntity)
 
-    @Query("SELECT * From NotesEntity")
-    fun getNotesEntities(): Flow<List<NotesEntity>>
+    @Query("SELECT * From NotesEntity ORDER BY date DESC, id DESC")
+    fun getNotesEntitiesDESC(): Flow<List<NotesEntity>>
+
+    @Query("SELECT * From NotesEntity ORDER BY date ASC, id DESC")
+    fun getNotesEntitiesASC(): Flow<List<NotesEntity>>
 
     @Query("DELETE FROM NotesEntity WHERE id =:id")
     fun deleteNoteEntityById(id: Int)

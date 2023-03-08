@@ -18,4 +18,18 @@ interface NotesRepository {
 
     suspend fun colorSelected(color: String, id: Int)
 
+    suspend fun listLayoutPressed()
+
+    suspend fun gridLayoutPressed()
+
+    suspend fun checkLayout(): Boolean
+
+    suspend fun sortingByDateDESC()
+
+    suspend fun sortingByDateASC()
+
+    suspend fun checkSortType(): Boolean
+
+
+
 }

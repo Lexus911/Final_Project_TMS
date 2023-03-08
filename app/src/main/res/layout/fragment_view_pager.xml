@@ -32,16 +32,4 @@
         app:layout_constraintTop_toTopOf="parent">
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/tab_button_menu"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/ic_tab_button_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.00999999" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
