@@ -20,6 +20,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {
 
+    @Binds
+    abstract fun bindNotesRepository(
+        notesRepositoryImpl: NotesRepositoryImpl
+    ): NotesRepository
+
+    @Binds
+    abstract fun bindTasksRepository(
+       taskRepositoryImpl: TasksRepositoryImpl
+    ): TasksRepository
+
     companion object{
         private const val SP_KEY = "SP_KEY"
         private const val BASE_URL = "https://api.jsonserve.com"
