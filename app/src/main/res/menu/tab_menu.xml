@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/list_display"
+        android:icon="@drawable/ic_list_view"
+        android:iconTintMode="src_in"
+        android:title="@string/list" />
+    <item
+        android:id="@+id/columns_display"
+        android:icon="@drawable/ic_columns_view"
+        android:iconTintMode="src_in"
+        android:title="@string/columns" />
+    <item
+        android:id="@+id/sorting_ASC"
+        android:icon="@drawable/ic_sort_asc"
+        android:iconTintMode="src_in"
+        android:title="@string/date_asc" />
+    <item
+        android:id="@+id/sorting_DESC"
+        android:icon="@drawable/ic_sort_desc"
+        android:iconTintMode="src_in"
+        android:title="@string/date_desc" />
+</menu>

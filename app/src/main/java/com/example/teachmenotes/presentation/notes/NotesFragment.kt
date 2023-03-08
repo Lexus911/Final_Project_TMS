@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,6 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
-import com.example.teachmenotes.presentation.notes.adapter.ViewPagerStateAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 import com.example.teachmenotes.utils.BundleConstants.COLOR
 import com.example.teachmenotes.utils.BundleConstants.ID
@@ -122,6 +122,15 @@ class NotesFragment : Fragment(), NotesListener {
                     }
                 }
         }
+    }
+
+    fun setGridLayout(){
+        binding.recyclerViewNotes.layoutManager =
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+    }
+
+    fun setLinearLayout(){
+        binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
     }
 
 

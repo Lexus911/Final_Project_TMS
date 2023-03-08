@@ -24,7 +24,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="26dp"
         android:src="@drawable/ic_add_note"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@android:color/holo_orange_dark"
         android:contentDescription="@string/plus_floating_button">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
