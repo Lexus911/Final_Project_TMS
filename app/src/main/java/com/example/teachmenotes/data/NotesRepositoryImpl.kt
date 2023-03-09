@@ -1,6 +1,5 @@
 package com.example.teachmenotes.data
 
-import android.util.Log
 import com.example.teachmenotes.data.database.NotesEntity
 import com.example.teachmenotes.data.database.dao.NotesDAO
 import com.example.teachmenotes.data.service.ApiService
@@ -70,7 +69,6 @@ class NotesRepositoryImpl @Inject constructor(
     override suspend fun getColors(): List<ColorModel> {
         return withContext(Dispatchers.IO){
             val response = apiService.getColors()
-            Log.w("Response from server", response.body()?.colorsList.toString())
             response.body()?.colorsList?.let{
                 it.map {it ->
                     ColorModel(it.value)
