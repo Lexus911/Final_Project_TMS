@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -95,7 +96,9 @@ class AddNoteFragment : Fragment(), ColorsListener {
 
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(it)
+                val navOptions = NavOptions.Builder()
+                navOptions.setPopUpTo(R.id.addNoteFragment, true)
+                findNavController().navigate(it, null, navOptions.build())
             }
         }
 

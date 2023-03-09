@@ -75,12 +75,10 @@ class AddNoteViewModel @Inject constructor(
     }
 
     fun visibilityRecyclerView(){
-        if(_visibility.value == GONE ){
-            _visibility.value = VISIBLE
-        }else{
+        if(_visibility.value == VISIBLE ){
             _visibility.value = GONE
+        }else{
+            _visibility.value = VISIBLE
         }
     }
-
-
 }
