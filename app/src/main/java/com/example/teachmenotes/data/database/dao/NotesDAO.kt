@@ -2,6 +2,7 @@ package com.example.teachmenotes.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Query
 import com.example.teachmenotes.data.database.NotesEntity
 import com.example.teachmenotes.data.database.TasksEntity
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotesDAO {
-    @Insert
+    @Insert(onConflict = IGNORE)
     fun insertNotesEntity(notesEntity: NotesEntity)
 
     @Query("SELECT * From NotesEntity ORDER BY date DESC, id DESC")
