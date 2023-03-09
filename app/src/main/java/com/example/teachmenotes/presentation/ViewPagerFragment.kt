@@ -12,11 +12,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ViewPagerFragment : Fragment() {
+class ViewPagerFragment : Fragment()  {
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var fragmentAdapter: ViewPagerStateAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +40,5 @@ class ViewPagerFragment : Fragment() {
             )
             tab.setIcon(tabIcons[position])
         }.attach()
-
-
     }
 }

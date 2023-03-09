@@ -6,8 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -60,7 +58,7 @@ class AddNoteFragment : Fragment(), ColorsListener {
             colorsAdapter.submitList(it)
         }
 
-        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy"))
+        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"))
 
         val bundle = arguments
         bundle?.let { safeBundle ->
@@ -73,7 +71,6 @@ class AddNoteFragment : Fragment(), ColorsListener {
             binding.linearLayout.setBackgroundColor(Color.parseColor(color))
         }
 
-        //Добавить проверку на пустые поля
         binding.imageViewSaveNote.setOnClickListener {
             if (bundle != null) {
                 viewModel.saveEditNote(
@@ -106,10 +103,10 @@ class AddNoteFragment : Fragment(), ColorsListener {
             val hideKeyboard = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             hideKeyboard.hideSoftInputFromWindow(binding.imageViewShowRecyclerView.windowToken, 0)
 
-            if (binding.recyclerViewColors.visibility == GONE) {
-                binding.recyclerViewColors.visibility = VISIBLE
-            } else {
-                binding.recyclerViewColors.visibility = GONE
+            viewModel.visibilityRecyclerView()
+
+            viewModel.visibility.observe(viewLifecycleOwner) {
+                binding.recyclerViewColors.visibility = it
             }
         }
     }

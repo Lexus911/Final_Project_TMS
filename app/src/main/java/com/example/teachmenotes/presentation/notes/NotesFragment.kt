@@ -21,7 +21,6 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentNotesBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.NotesAdapter
-import com.example.teachmenotes.presentation.notes.adapter.ViewPagerStateAdapter
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
 import com.example.teachmenotes.utils.BundleConstants.COLOR
 import com.example.teachmenotes.utils.BundleConstants.ID
@@ -50,20 +49,18 @@ class NotesFragment : Fragment(), NotesListener {
         super.onViewCreated(view, savedInstanceState)
 
         notesAdapter = NotesAdapter(this)
-        binding.recyclerViewNotes.layoutManager =
-            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        binding.recyclerViewNotes.adapter = notesAdapter
+        viewModel.checkLayout()
+        viewModel.layout.observe(viewLifecycleOwner){
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.notes.catch {
-                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            when(it){
+                false -> binding.recyclerViewNotes.layoutManager =
+                    StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                 true ->  binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
             }
-                .collect { flowList ->
-                    flowList.collect { listNotes ->
-                        notesAdapter.submitList(listNotes)
-                    }
-                }
+            binding.recyclerViewNotes.adapter = notesAdapter
         }
+
+        submitListNotes()
 
         binding.btnAddNote.setOnClickListener {
             viewModel.addNoteButtonClicked()
@@ -104,6 +101,19 @@ class NotesFragment : Fragment(), NotesListener {
         })
     }
 
+    private fun submitListNotes() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.notes.catch {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+                .collect { flowList ->
+                    flowList.collect { listNotes ->
+                        notesAdapter.submitList(listNotes)
+                    }
+                }
+        }
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun searchNote() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -124,7 +134,6 @@ class NotesFragment : Fragment(), NotesListener {
         }
     }
 
-
     override fun onClick(noteModel: NoteModel) {
         viewModel.noteClicked(noteModel.id!!, noteModel.title, noteModel.note, noteModel.color)
     }
@@ -133,13 +142,35 @@ class NotesFragment : Fragment(), NotesListener {
         val popupMenu = PopupMenu(requireContext(), cardView)
         popupMenu.inflate(R.menu.popup_menu)
         popupMenu.setOnMenuItemClickListener {
+
             when (it.itemId) {
                 R.id.delete_note -> {
                 viewModel.deleteNote(noteModel.id!!)
                 Toast.makeText(requireContext(), getString(R.string.note_deleted), Toast.LENGTH_SHORT).show()
+                    true
                 }
+                R.id.list_display -> {
+                    binding.recyclerViewNotes.layoutManager = LinearLayoutManager(context)
+                    viewModel.listLayout()
+                    true
+                }
+                R.id.columns_display -> {
+                    binding.recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                    viewModel.gridLayout()
+                    true
+                }
+                R.id.sorting_ASC -> {
+                viewModel.sortingByDateASC()
+                submitListNotes()
+                    true
+                }
+                R.id.sorting_DESC -> {
+                viewModel.sortingByDateDESC()
+                submitListNotes()
+                    true
+                }
+                else -> false
             }
-            false
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
