@@ -1,5 +1,6 @@
 package com.example.teachmenotes.presentation.notes
 
+import android.content.Context
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.lifecycle.LiveData
@@ -10,13 +11,15 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.domain.NotesInteractor
 import com.example.teachmenotes.presentation.model.ColorModel
 import com.example.teachmenotes.presentation.model.NoteModel
+import com.example.teachmenotes.utils.InternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddNoteViewModel @Inject constructor(
-    private val notesInteractor: NotesInteractor
+    private val notesInteractor: NotesInteractor,
+    private val context: Context
 ): ViewModel() {
 
     private val _nav = MutableLiveData<Int?>()
@@ -43,12 +46,16 @@ class AddNoteViewModel @Inject constructor(
     }
 
     fun getColors() {
-       viewModelScope.launch {
-            try {
-               _colors.value = notesInteractor.getColors()
-            }catch (e: Exception){
-                _error.value = e.message.toString()
+        if (InternetConnection(context).isOnline()) {
+            viewModelScope.launch {
+                try {
+                    _colors.value = notesInteractor.getColors()
+                } catch (e: Exception) {
+                    _error.value = e.message.toString()
+                }
             }
+        } else {
+            _error.value = context.getString(R.string.check_inet)
         }
     }
 

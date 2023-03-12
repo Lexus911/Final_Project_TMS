@@ -83,6 +83,16 @@ class NotesViewModel @Inject constructor(
         }
     }
 
+    fun deleteNote(id: Int) {
+        viewModelScope.launch {
+            try {
+                notesInteractor.deleteNoteById(id)
+            }catch (e: Exception){
+                _error.value = e.message.toString()
+            }
+        }
+    }
+
     fun addNoteButtonClicked(){
         _nav.value = R.id.action_viewPagerFragment_to_addNoteFragment
     }
@@ -97,17 +107,6 @@ class NotesViewModel @Inject constructor(
     }
     fun navFinished(){
         _nav.value = null
-    }
-
-    fun deleteNote(id: Int) {
-        viewModelScope.launch {
-            try {
-                notesInteractor.deleteNoteById(id)
-            }catch (e: Exception){
-                _error.value = e.message.toString()
-            }
-        }
-
     }
 }
 
