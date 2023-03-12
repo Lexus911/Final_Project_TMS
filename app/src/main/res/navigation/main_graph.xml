@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/viewPagerFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/notesFragment"
@@ -32,5 +32,14 @@
         <action
             android:id="@+id/action_viewPagerFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.teachmenotes.presentation.SplashScreenFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
 </navigation>
