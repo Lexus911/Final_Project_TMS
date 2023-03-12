@@ -1,5 +1,6 @@
 package com.example.teachmenotes.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.FragmentSplashScreenBinding
 
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenFragment : Fragment() {
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
