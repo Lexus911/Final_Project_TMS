@@ -63,7 +63,7 @@ class AddNoteViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 notesInteractor.saveNote(noteModel)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 _error.value = e.message.toString()
             }
         }

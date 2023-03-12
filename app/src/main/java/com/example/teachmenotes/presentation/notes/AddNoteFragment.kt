@@ -85,13 +85,16 @@ class AddNoteFragment : Fragment(), ColorsListener {
                         binding.editTextTitle.text.toString(),
                         binding.editTextNote.text.toString(),
                         date,
-                        if(binding.colorTextView.text.isNotEmpty()){
+                        if (binding.colorTextView.text.isNotEmpty()) {
                             binding.colorTextView.text.toString()
-                        }else{getString(R.string.default_color)}
+                        } else {
+                            getString(R.string.default_color)
+                        }
                     )
                 )
             }
         }
+
 
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -112,6 +115,7 @@ class AddNoteFragment : Fragment(), ColorsListener {
         viewModel.visibility.observe(viewLifecycleOwner) {
             binding.recyclerViewColors.visibility = it
         }
+
 
         viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
