@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
@@ -53,8 +54,6 @@ class AddNoteFragment : Fragment(), ColorsListener {
         binding.recyclerViewColors.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding.recyclerViewColors.adapter = colorsAdapter
 
-        viewModel.getColors()
-
         viewModel.colors.observe(viewLifecycleOwner) {
             colorsAdapter.submitList(it)
         }
@@ -86,13 +85,16 @@ class AddNoteFragment : Fragment(), ColorsListener {
                         binding.editTextTitle.text.toString(),
                         binding.editTextNote.text.toString(),
                         date,
-                        if(binding.colorTextView.text.isNotEmpty()){
+                        if (binding.colorTextView.text.isNotEmpty()) {
                             binding.colorTextView.text.toString()
-                        }else{getString(R.string.default_color)}
+                        } else {
+                            getString(R.string.default_color)
+                        }
                     )
                 )
             }
         }
+
 
         viewModel.nav.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -106,12 +108,19 @@ class AddNoteFragment : Fragment(), ColorsListener {
             val hideKeyboard = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             hideKeyboard.hideSoftInputFromWindow(binding.imageViewShowRecyclerView.windowToken, 0)
 
+            viewModel.getColors()
             viewModel.visibilityRecyclerView()
-
-            viewModel.visibility.observe(viewLifecycleOwner) {
-                binding.recyclerViewColors.visibility = it
-            }
         }
+
+        viewModel.visibility.observe(viewLifecycleOwner) {
+            binding.recyclerViewColors.visibility = it
+        }
+
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 

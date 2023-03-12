@@ -107,7 +107,7 @@ class TasksFragment : Fragment(), TasksListener {
 
     override fun onLongClick(taskModel: TaskModel, cardView: CardView) {
         val popupMenu = PopupMenu(requireContext(), cardView)
-        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.inflate(R.menu.popup_menu_tasks)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.delete_note -> {

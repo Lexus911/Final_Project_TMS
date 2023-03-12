@@ -22,4 +22,6 @@
     <string name="date_asc">Date ASC</string>
     <string name="date_desc">Date DESC</string>
     <string name="list">List</string>
+    <string name="check_inet">Check your internet connection, please</string>
+    <string name="teachmenotes">TeachMeNotes</string>
 </resources>

@@ -140,7 +140,7 @@ class NotesFragment : Fragment(), NotesListener {
 
     override fun onLongClick(noteModel: NoteModel, cardView: CardView) {
         val popupMenu = PopupMenu(requireContext(), cardView)
-        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.inflate(R.menu.popup_menu_notes)
         popupMenu.setOnMenuItemClickListener {
 
             when (it.itemId) {

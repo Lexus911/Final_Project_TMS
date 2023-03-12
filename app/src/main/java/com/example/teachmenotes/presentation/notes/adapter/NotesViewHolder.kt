@@ -1,11 +1,10 @@
 package com.example.teachmenotes.presentation.notes.adapter
 
 import android.graphics.Color
-import android.graphics.Color.RED
 import android.os.Bundle
-import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.RecyclerView
-import com.example.teachmenotes.R
 import com.example.teachmenotes.databinding.NotesListBinding
 import com.example.teachmenotes.presentation.model.NoteModel
 import com.example.teachmenotes.presentation.notes.adapter.listener.NotesListener
@@ -20,6 +19,12 @@ class NotesViewHolder(private val binding: NotesListBinding,
         binding.tvTitle.text = noteModel.title
         binding.tvNote.text = noteModel.note
         binding.tvDate.text = noteModel.date
+
+        if(binding.tvTitle.text.isNullOrEmpty()){
+            binding.tvTitle.visibility = GONE
+        }else{
+            binding.tvTitle.visibility = VISIBLE
+        }
 
         binding.notesContainer.setCardBackgroundColor(Color.parseColor(noteModel.color))
 
